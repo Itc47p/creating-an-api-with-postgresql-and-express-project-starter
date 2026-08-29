@@ -5,38 +5,55 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- Index — `GET /products`
+- Show — `GET /products/:id`
+- Create [token required] — `POST /products`
+- Products by category (args: product category) — `GET /products/category/:category`
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index [token required] — `GET /users`
+- Show [token required] — `GET /users/:id`
+- Create [token required] — `POST /users` (returns a JWT for the new user; no separate login endpoint)
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+
+- Current Order by user (args: user id) [token required] — `GET /orders/current/:userId`
+- Completed Orders by user (args: user id) [token required] — `GET /orders/completed/:userId`
+- Add product to order (args: user id, product id, quantity) [token required] — `POST /orders/:userId/products` (auto-creates the user's active order if none exists; response flags this)
+- Complete order (args: order id) [token required] — `PATCH /orders/:id/complete` (rejected if the order has no products)
 
 ## Data Shapes
+
 #### Product
--  id
+
+- id
 - name
-- price
-- [OPTIONAL] category
+- price (integer, cents)
+- category
 
 #### User
+
 - id
+- username
 - firstName
 - lastName
-- password
+- password (bcrypt hash, never returned in responses)
 
 #### Orders
+
 - id
 - id of each product in the order
 - quantity of each product in the order
 - user_id
 - status of order (active or complete)
 
+## Database Schema
+
+---
+
+users (id SERIAL PK, username VARCHAR UNIQUE, firstName VARCHAR, lastName VARCHAR, password VARCHAR)
+products (id SERIAL PK, name VARCHAR, price INTEGER, category VARCHAR)
+orders (id SERIAL PK, user_id INTEGER [FK -> users.id], status VARCHAR)
+order_products (id SERIAL PK, order_id INTEGER [FK -> orders.id], product_id INTEGER [FK -> products.id], quantity INTEGER)
+
+---
