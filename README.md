@@ -62,6 +62,23 @@ npm test
 
 This applies the migrations to the test database (`storefront_test`, selectd via `db-migrate -e test`), will run the Jasmine model and endpoint specs, and then will tear down the test schema back donwn — so it's safe to run repeatedly.
 
+## Environment variables (for reviewers)
+
+`.env` is gitignored, so the real values used in this submission are listed here for grading:
+
+```
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=storefront_dev
+POSTGRES_TEST_DB=storefront_test
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=mysecretpassword
+ENV=dev
+BCRYPT_PASSWORD=anewtestpassword
+SALT_ROUNDS=10
+JWT_SECRET=change_this_secret_in_production
+```
+
 ## Linting
 
 ```
