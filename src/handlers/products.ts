@@ -48,11 +48,22 @@ const byCategory = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
+const destroy = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const product = await store.delete(parseInt(req.params.id, 10));
+        res.json(product);
+    } catch (err) {
+        res.status(400);
+        res.json(`${err}`);
+    }
+};
+
 const productRoutes = (app: express.Application): void => {
     app.get('/products', index);
     app.get('/products/category/:category', byCategory);
     app.get('/products/:id', show);
     app.post('/products', verifyAuthToken, create);
+    app.delete('/products/:id', verifyAuthToken, destroy);
 };
 
 export default productRoutes;

@@ -40,4 +40,18 @@ describe('Product Endpoints', () => {
         expect(res.status).toEqual(200);
         expect(res.body.some((p: { id: number }) => p.id === productId)).toBeTrue();
     });
+
+    it('DELETE /products/:id should reject a request without a token', async () => {
+        const res = await request.delete(`/products/${productId}`);
+        expect(res.status).toEqual(401);
+    });
+
+    it('DELETE /products/:id should remove the product given a valid token', async () => {
+        const res = await request.delete(`/products/${productId}`).set('Authorization', `Bearer ${token}`);
+        expect(res.status).toEqual(200);
+        expect(res.body.id).toEqual(productId);
+
+        const indexRes = await request.get('/products');
+        expect(indexRes.body.some((p: { id: number }) => p.id === productId)).toBeFalse();
+    });
 });

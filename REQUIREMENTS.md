@@ -9,6 +9,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Show — `GET /products/:id`
 - Create [token required] — `POST /products`
 - Products by category (args: product category) — `GET /products/category/:category`
+- Delete [token required] — `DELETE /products/:id`
 
 #### Users
 - Index [token required] — `GET /users`

@@ -8,7 +8,7 @@ REST API backing an online storefront: browsing products, placing orders, and ma
 - dotenv from npm for managing environment variables
 - db-migrate from npm for migrations
 - jsonwebtoken from npm for working with JWTs
-- bcryptjs from npm for password hashing
+- bcrypt from npm for password hashing
 - jasmine from npm for testing
 
 ## Prerequisites

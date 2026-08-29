@@ -19,6 +19,10 @@ describe('Product Model', () => {
         expect(store.byCategory).toBeDefined();
     });
 
+    it('should have a delete method', () => {
+        expect(store.delete).toBeDefined();
+    });
+
     describe('CRUD operations', () => {
         let created: Product;
 
@@ -44,6 +48,13 @@ describe('Product Model', () => {
         it('byCategory should return products in that category', async () => {
             const result = await store.byCategory('gadgets');
             expect(result.some((p) => p.id === created.id)).toBeTrue();
+        });
+
+        it('delete should remove the product', async () => {
+            const deleted = await store.delete(created.id as number);
+            expect(deleted.id).toEqual(created.id);
+            const result = await store.index();
+            expect(result.some((p) => p.id === created.id)).toBeFalse();
         });
     });
 });
