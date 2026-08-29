@@ -13,7 +13,7 @@ const { BCRYPT_PASSWORD, SALT_ROUNDS } = process.env;
 
 // strips the password hash before returning a user to callers
 const sanitize = (row: User): User => {
-    const { password, ...rest } = row;
+    const { password: _password, ...rest } = row;
     return rest as User;
 };
 
